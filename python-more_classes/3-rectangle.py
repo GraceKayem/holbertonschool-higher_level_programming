@@ -8,18 +8,15 @@ class Rectangle:
     """Rectangle class with private width and height attributes."""
 
     def __init__(self, width=0, height=0):
-        """Instantiation with optional width and height."""
         self.width = width
         self.height = height
 
     @property
     def width(self):
-        """Retrieve the width."""
         return self.__width
 
     @width.setter
     def width(self, value):
-        """Set the width with type and value validation."""
         if not isinstance(value, int):
             raise TypeError("width must be an integer")
         if value < 0:
@@ -28,12 +25,10 @@ class Rectangle:
 
     @property
     def height(self):
-        """Retrieve the height."""
         return self.__height
 
     @height.setter
     def height(self, value):
-        """Set the height with type and value validation."""
         if not isinstance(value, int):
             raise TypeError("height must be an integer")
         if value < 0:
@@ -41,21 +36,17 @@ class Rectangle:
         self.__height = value
 
     def area(self):
-        """Return the rectangle area."""
         return self.__width * self.__height
 
     def perimeter(self):
-        """Return the rectangle perimeter."""
         if self.__width == 0 or self.__height == 0:
             return 0
         return 2 * (self.__width + self.__height)
 
     def __str__(self):
-        """Return the rectangle represented with '#' characters."""
         if self.__width == 0 or self.__height == 0:
             return ""
         return "\n".join(["#" * self.__width for _ in range(self.__height)])
 
     def __repr__(self):
-        """Return the official string representation of the Rectangle."""
         return f"<{self.__class__.__module__}.{self.__class__.__name__} object at {hex(id(self))}>"
