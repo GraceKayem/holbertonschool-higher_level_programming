@@ -9,12 +9,13 @@ two new lines after each '.', '?', and ':' character.
 
 def text_indentation(text):
     """Print text with 2 new lines after '.', '?', or ':'"""
-    
+
     if not isinstance(text, str):
         raise TypeError("text must be a string")
 
-    for l in '.:?':
-        text = text.replace(l, '{}\n'.format(l))
+    for char in ".:?":
+        text = text.replace(char, "{}\n".format(char))
+
     lines = text.splitlines()
-    for index, line in enumerate(lines):
-        print(line.strip(), end='' if index == len(lines) - 1 else '\n\n')
+    for i, line in enumerate(lines):
+        print(line.strip(), end='' if i == len(lines) - 1 else '\n\n')
