@@ -65,10 +65,7 @@ class Rectangle:
 
     def __repr__(self):
         """Return a string that can recreate a new instance via eval()."""
-        return (
-            f"Rectangle({self.__width}, "
-            f"{self.__height})"
-        )
+        return ("Rectangle({}, {})".format(self.__width, self.__height))
 
     def __del__(self):
         """Print a message when an instance is deleted and decrement counter."""
