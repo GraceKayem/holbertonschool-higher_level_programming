@@ -1,18 +1,18 @@
 #!/usr/bin/python3
 """
-Class Rectangle that defines a rectangle with width, height, instance tracking,
-and customizable print symbol.
+Class Rectangle that defines a rectangle by width and height,
+tracks number of instances, and allows customizable print symbols.
 """
 
 
 class Rectangle:
-    """Rectangle class with private width and height attributes."""
+    """Rectangle class with width and height attributes."""
 
     number_of_instances = 0
     print_symbol = "#"
 
     def __init__(self, width=0, height=0):
-        """Instantiation with optional width and height."""
+        """Instantiate a rectangle with optional width and height."""
         self.width = width
         self.height = height
         Rectangle.number_of_instances += 1
@@ -50,10 +50,27 @@ class Rectangle:
         return self.__width * self.__height
 
     def perimeter(self):
-        """Return the rectangle perimeter."""
+        """Return the rectangle perimeter, 0 if width or height is 0."""
         if self.__width == 0 or self.__height == 0:
             return 0
         return 2 * (self.__width + self.__height)
 
     def __str__(self):
-        """Return a printable rectangle using print_symbol."""
+        """Return a string representation using print_symbol."""
+        if self.__width == 0 or self.__height == 0:
+            return ""
+        sym = str(self.print_symbol)
+        lines = [sym * self.__width for _ in range(self.__height)]
+        return "\n".join(lines)
+
+    def __repr__(self):
+        """Return a string that can recreate a new instance via eval()."""
+        return (
+            f"Rectangle({self.__width}, "
+            f"{self.__height})"
+        )
+
+    def __del__(self):
+        """Print a message when an instance is deleted and decrement counter."""
+        print("Bye rectangle...")
+        Rectangle.number_of_instances -= 1
