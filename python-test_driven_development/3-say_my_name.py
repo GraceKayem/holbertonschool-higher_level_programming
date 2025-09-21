@@ -1,26 +1,13 @@
 #!/usr/bin/python3
 """
 3-say_my_name module
-
-This module contains a function that prints "My name is <first name> <last name>".
 """
 
-
 def say_my_name(first_name, last_name=""):
-    """
-    Prints 'My name is <first_name> <last_name>' with a trailing space after the last name.
-
-    Args:
-        first_name (str): First name
-        last_name (str, optional): Last name. Defaults to "".
-
-    Raises:
-        TypeError: if first_name or last_name is not a string
-    """
+    """Prints 'My name is <first_name> <last_name>'."""
     if not isinstance(first_name, str):
-        raise TypeError("first_name must be a string")
-    if not isinstance(last_name, str):
-        raise TypeError("last_name must be a string")
-    
-    # Print exactly what the checker expects (with the trailing space)
+        raise TypeError('first_name must be a string')
+    elif not isinstance(last_name, str):
+        raise TypeError('last_name must be a string')
+
     print('My name is {} {}'.format(first_name, last_name))
