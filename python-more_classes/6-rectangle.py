@@ -1,11 +1,14 @@
 #!/usr/bin/python3
 """
-Class Rectangle that defines a rectangle with width, height, and instance tracking.
+Class Rectangle that defines a rectangle with width, height, and
+instance tracking.
 """
 
 
 class Rectangle:
-    """Rectangle class with private width and height attributes and instance counter."""
+    """Rectangle class with private width and height attributes
+    and instance counter.
+    """
 
     number_of_instances = 0  # Public class attribute
 
@@ -61,9 +64,14 @@ class Rectangle:
 
     def __repr__(self):
         """Return a string that can recreate a new instance via eval()."""
-        return f"Rectangle({self.__width}, {self.__height})"
+        return (
+            f"Rectangle({self.__width}, "
+            f"{self.__height})"
+        )
 
     def __del__(self):
-        """Print a message when an instance is deleted and decrement instance counter."""
+        """Print a message when an instance is deleted and
+        decrement instance counter.
+        """
         print("Bye rectangle...")
         Rectangle.number_of_instances -= 1
