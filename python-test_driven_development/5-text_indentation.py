@@ -13,9 +13,16 @@ def text_indentation(text):
     if not isinstance(text, str):
         raise TypeError("text must be a string")
 
-    for char in ".:?":
-        text = text.replace(char, "{}\n".format(char))
+    end_chars = ".?:"
+    start = 0
 
-    lines = text.splitlines()
-    for i, line in enumerate(lines):
-        print(line.strip(), end='' if i == len(lines) - 1 else '\n\n')
+    for index, char in enumerate(text):
+        if char in end_chars:
+            print(text[start:index + 1].strip())
+            print()
+            start = index + 1
+
+    # Print any remaining text after the last end character
+    remaining = text[start:].strip()
+    if remaining:
+        print(remaining)
