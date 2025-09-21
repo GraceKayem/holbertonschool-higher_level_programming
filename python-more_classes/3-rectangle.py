@@ -58,5 +58,5 @@ class Rectangle:
         return "\n".join(lines)
 
     def __repr__(self):
-        """Return a string that can recreate the rectangle via eval()."""
-        return f"Rectangle({self.__width}, {self.__height})"
+        """Return a string representation for recreation of the rectangle."""
+        return f"<{self.__class__.__name__} object at {hex(id(self))}>"
