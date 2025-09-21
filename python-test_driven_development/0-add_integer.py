@@ -13,6 +13,7 @@ def add_integer(a, b=98):
 
     Raises:
         TypeError: if a or b is not an int or float
+        OverflowError: if float too large to convert to int
 
     Returns:
         int: the sum of a and b
