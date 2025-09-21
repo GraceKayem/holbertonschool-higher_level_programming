@@ -1,14 +1,80 @@
->>> text_indentation = __import__('5-text_indentation').text_indentation
->>> text_indentation("Hello world. How are you?")
-Hello world.
-How are you?
+The ``Text identation`` module
+===========================
 
->>> text_indentation("I like Python: it is great. Do you agree?")
-I like Python:
-it is great.
-Do you agree?
+Using ``text_indentation``
+----------------------
 
->>> text_indentation(123)
-Traceback (most recent call last):
-    ...
-TypeError: text must be a string
+First import ``print_square`` from the ``Print Square`` module:
+
+    >>> text_indentation = __import__("5-text_indentation").text_indentation
+
+Now use it:
+
+    >>> text_indentation('abc.def')
+    abc.
+    <BLANKLINE>
+    def
+
+    >>> text_indentation('abc.       def')
+    abc.
+    <BLANKLINE>
+    def
+
+    >>> text_indentation('abc      .        def.')
+    abc      .
+    <BLANKLINE>
+    def.
+    
+    >>> text_indentation('abc..def')
+    abc.
+    <BLANKLINE>
+    .
+    <BLANKLINE>
+    def
+
+    >>> text_indentation('abc:def')
+    abc:
+    <BLANKLINE>
+    def
+
+    >>> text_indentation('abc:       def')
+    abc:
+    <BLANKLINE>
+    def
+
+    >>> text_indentation('abc      :        def.')
+    abc      :
+    <BLANKLINE>
+    def.
+
+    >>> text_indentation('abc:def.')
+    abc:
+    <BLANKLINE>
+    def.
+
+    >>> text_indentation('abc.def?')
+    abc.
+    <BLANKLINE>
+    def?
+
+    >>> text_indentation('abc?       def')
+    abc?
+    <BLANKLINE>
+    def
+
+    >>> text_indentation('abc      ?        def.')
+    abc      ?
+    <BLANKLINE>
+    def.
+
+    >>> text_indentation('abc?.def')
+    abc?
+    <BLANKLINE>
+    .
+    <BLANKLINE>
+    def
+
+    >>> text_indentation(5)
+    Traceback (most recent call last):
+        ...
+    TypeError: text must be a string
