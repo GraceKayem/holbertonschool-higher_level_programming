@@ -1,4 +1,9 @@
 #!/usr/bin/python3
+"""
+This module provides a function matrix_divided(matrix, div)
+that divides all elements of a matrix by div and returns a new matrix.
+"""
+
 def matrix_divided(matrix, div):
     """
     Divides all elements of a matrix by div.
