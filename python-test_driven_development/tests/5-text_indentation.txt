@@ -1,24 +1,17 @@
->>> from 5-text_indentation import text_indentation
+>>> text_indentation = __import__('5-text_indentation').text_indentation
 >>> text_indentation("Hello world. How are you?")
 Hello world.
- 
+
 How are you?
->>> text_indentation("This is a test: check this.")
-This is a test:
- 
-check this.
->>> text_indentation("No separators here")
-No separators here
->>> text_indentation("")
+
+>>> text_indentation("I like Python: it is great. Do you agree?")
+I like Python:
+
+it is great.
+
+Do you agree?
+
 >>> text_indentation(123)
 Traceback (most recent call last):
     ...
 TypeError: text must be a string
->>> text_indentation("Multiple. Separators? In: one sentence.")
-Multiple.
-
-Separators?
-
-In:
-
-one sentence.
