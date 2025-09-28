@@ -3,7 +3,7 @@
 2-matrix_divided module.
 
 This module contains a function that divides all elements of a matrix
-by a given number.
+by a given number and returns a new matrix.
 """
 
 
@@ -38,11 +38,7 @@ def matrix_divided(matrix, div):
         )
 
     row_lengths = [len(row) for row in matrix]
-    if len(set(row_lengths)) != 1:
+    if len(set(row_lengths)) != 1 or row_lengths[0] == 0:
         raise TypeError("Each row of the matrix must have the same size")
 
-    new_matrix = [
-        [round(el / div, 2) for el in row]
-        for row in matrix
-    ]
-    return new_matrix
+    return [[round(el / div, 2) for el in row] for row in matrix]
