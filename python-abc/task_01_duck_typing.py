@@ -10,9 +10,7 @@ import math
 
 
 class Shape(ABC):
-    """
-    Abstract base class for shapes.
-    """
+    """Abstract base class for shapes."""
 
     @abstractmethod
     def area(self):
@@ -27,7 +25,8 @@ class Circle(Shape):
     """Circle shape with a given radius."""
 
     def __init__(self, radius):
-        self.radius = radius
+        # Ensure radius is non-negative
+        self.radius = abs(radius)
 
     def area(self):
         return math.pi * (self.radius ** 2)
