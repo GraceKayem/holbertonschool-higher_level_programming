@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Write a function that returns True if the object is an instance of a class that inherited (directly or indirectly) from the specified class ; otherwise False
+Return True if obj is an instance of a subclass (direct or indirect) of a_class; otherwise False.
 """
 
 
