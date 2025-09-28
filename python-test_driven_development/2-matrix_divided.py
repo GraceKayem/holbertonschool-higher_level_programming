@@ -8,7 +8,21 @@ by a given number.
 
 
 def matrix_divided(matrix, div):
+    """Divides all elements of a matrix by div and returns a new matrix.
 
+    Args:
+        matrix (list of lists of int/float): the matrix to divide
+        div (int/float): the divisor
+
+    Raises:
+        TypeError: if matrix is not a list of lists of integers/floats
+        TypeError: if rows are not of the same size
+        TypeError: if div is not a number
+        ZeroDivisionError: if div is 0
+
+    Returns:
+        list: new matrix with all elements divided by div, rounded to 2 decimals
+    """
     if not isinstance(div, (int, float)):
         raise TypeError("div must be a number")
     if div == 0:
