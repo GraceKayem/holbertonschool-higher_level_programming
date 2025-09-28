@@ -31,8 +31,10 @@ def matrix_divided(matrix, div):
 
     if (not isinstance(matrix, list)
             or any(not isinstance(row, list) for row in matrix)
-            or any(not all(isinstance(el, (int, float)) for el in row)
-                   for row in matrix)):
+            or any(
+                not all(isinstance(el, (int, float)) for el in row)
+                for row in matrix
+            )):
         raise TypeError(
             "matrix must be a matrix (list of lists) of integers/floats"
         )
