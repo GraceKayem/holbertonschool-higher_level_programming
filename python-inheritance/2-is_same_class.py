@@ -5,6 +5,16 @@ Write a function that returns True if the object is exactly an instance of the s
 
 
 def is_same_class(obj, a_class):
+    """
+    Return True if obj is exactly an instance of a_class; otherwise False.
+    
+    Args:
+        obj (any): The object to check.
+        a_class (type): The class to match.
+    
+    Returns:
+        bool: True if obj is exactly an instance of a_class, else False.
+    """
     if type(obj) == a_class:
         return True
     else:
