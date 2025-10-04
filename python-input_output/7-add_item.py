@@ -1,20 +1,21 @@
 #!/usr/bin/python3
 """
-script that adds all arguments to a Python list, and then save them to a file
+Function that writes a Python object to a text file using JSON representation.
 """
-
 
 import json
 
+
 def save_to_json_file(my_obj, filename):
     """
-    script that adds all arguments to a Python list, and then save them to a file
+    Writes a Python object to a text file in JSON format.
 
     Args:
-        filename (str): script that adds all arguments to a Python list, and then save them to a file
+        my_obj: The Python object to serialize.
+        filename (str): The name of the file to write to.
 
     Returns:
-        script that adds all arguments to a Python list, and then save them to a file
+        None
     """
     with open(filename, "w", encoding="utf-8") as file:
         json.dump(my_obj, file)
