@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Script that adds all arguments to a Python list,
+Script that adds all arguments to a Python list
 and saves them to a file.
 """
 
@@ -16,8 +16,8 @@ try:
 except FileNotFoundError:
     items = []
 
-# Extend the list with all command-line arguments (excluding the script name)
+# Add all command-line arguments (excluding the script name)
 items.extend(sys.argv[1:])
 
-# Save the updated list back to the file
+# Save the updated list back to the JSON file
 save_to_json_file(items, filename)
