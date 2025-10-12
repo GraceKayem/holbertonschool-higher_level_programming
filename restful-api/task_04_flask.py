@@ -9,10 +9,7 @@ app = Flask(__name__)
 
 # Users dictionary, stored in memory
 # Key: username, Value: user dictionary
-users = {
-    "jane": {"username": "jane", "name": "Jane", "age": 28, "city": "Los Angeles"},
-    "john": {"username": "john", "name": "John", "age": 30, "city": "New York"}
-}
+users = {}
 
 
 @app.route("/")
@@ -24,7 +21,7 @@ def home():
 @app.route("/data")
 def get_usernames():
     """Return a list of all usernames."""
-    return jsonify(list(users.keys()))
+    return jsonify([user["username"] for user in users.values()])
 
 
 @app.route("/status")
@@ -47,6 +44,8 @@ def get_user(username):
 def add_user():
     """Add a new user from JSON POST data."""
     data = request.get_json()
+    if not data:
+        return jsonify({"error": "Invalid JSON"}), 400
 
     # Check if username is provided
     username = data.get("username")
