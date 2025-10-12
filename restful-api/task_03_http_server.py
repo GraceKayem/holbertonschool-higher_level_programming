@@ -1,10 +1,46 @@
 #!/usr/bin/env python3
 """
-Create a function fetch_and_print_posts() that fetches all posts from JSONPlaceholder.
-Create a function fetch_and_save_posts() that fetches all posts from JSONPlaceholder.
+Simple HTTP server using socketserver.TCPServer and http.server.
 """
 
-import requests
-import csv
+import http.server
+import socketserver
+import json
 
-def (http.server.BaseHTTPRequestHandler):
+PORT = 8000
+
+class MyHandler(http.server.BaseHTTPRequestHandler):
+    """Custom handler to serve different endpoints."""
+
+    def do_GET(self):
+        """Handle GET requests for /, /data, /status, or 404."""
+        if self.path == "/":
+            self.send_response(200)
+            self.send_header("Content-type", "text/plain")
+            self.end_headers()
+            self.wfile.write(b"Hello, this is a simple API!")
+
+        elif self.path == "/data":
+            self.send_response(200)
+            self.send_header("Content-type", "application/json")
+            self.end_headers()
+            data = {"name": "John", "age": 30, "city": "New York"}
+            self.wfile.write(json.dumps(data).encode("utf-8"))
+
+        elif self.path == "/status":
+            self.send_response(200)
+            self.send_header("Content-type", "text/plain")
+            self.end_headers()
+            self.wfile.write(b"OK")
+
+        else:
+            self.send_response(404)
+            self.send_header("Content-type", "text/plain")
+            self.end_headers()
+            self.wfile.write(b"Endpoint not found")
+
+
+# Create the TCP server
+with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
+    print(f"Serving at port {PORT}")
+    httpd.serve_forever()
