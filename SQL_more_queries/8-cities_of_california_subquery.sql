@@ -3,10 +3,9 @@ USE hbtn_0d_usa;
 -- The states table contains only one record where name = California (but the id can be different, as per the example)
 
 -- selecting id and name columns from the cities table
-SELECT id, name 
-FROM cities
+SELECT * FROM cities
 -- include whose state_id matches one of the IDs
-WHERE state_id IN (
+WHERE state_id = (
 	-- subquery
 	SELECT id
 	FROM states
