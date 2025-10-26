@@ -5,12 +5,7 @@ USE hbtn_0d_usa;
 -- selecting id and name columns from the cities table
 SELECT * FROM cities
 -- include whose state_id matches one of the IDs
-WHERE state_id = (
-	-- subquery
-	SELECT id
-	FROM states
-	WHERE name = 'California'
-)
+WHERE state_id = (SELECT id FROM states WHERE name = 'California')
 -- Results must be sorted in ascending order by cities.id
 ORDER BY id ASC;
 
