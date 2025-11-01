@@ -20,7 +20,7 @@ def add_state(mysql_user, mysql_pass, db_name):
     Connect to the database, add a new State named "Louisiana",
     and print its id.
     """
-    # Create engine
+    # Create SQLAlchemy engine
     engine = create_engine(
         f"mysql+mysqldb://{mysql_user}:{mysql_pass}@localhost:3306/{db_name}",
         pool_pre_ping=True
@@ -47,7 +47,8 @@ def add_state(mysql_user, mysql_pass, db_name):
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
-        print("Usage: {} <mysql_user> <mysql_password> <db_name>".format(sys.argv[0]))
+        print("Usage: {} <mysql_user> <mysql_password> <db_name>"
+              .format(sys.argv[0]))
         sys.exit(1)
 
     user = sys.argv[1]

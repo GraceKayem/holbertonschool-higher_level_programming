@@ -20,13 +20,11 @@ def delete_states_with_a(mysql_user, mysql_pass, db_name):
     Connects to the database and deletes all State objects
     where the name contains the letter 'a'.
     """
-    # Create the engine
     engine = create_engine(
         f"mysql+mysqldb://{mysql_user}:{mysql_pass}@localhost:3306/{db_name}",
         pool_pre_ping=True
     )
 
-    # Create session
     Session = sessionmaker(bind=engine)
     session = Session()
 
@@ -34,14 +32,11 @@ def delete_states_with_a(mysql_user, mysql_pass, db_name):
         # Query all states containing 'a'
         states_to_delete = session.query(State).filter(State.name.like('%a%')).all()
 
-        # Delete each state
         for state in states_to_delete:
             session.delete(state)
 
-        # Commit changes
         session.commit()
     finally:
-        # Close the session
         session.close()
 
 

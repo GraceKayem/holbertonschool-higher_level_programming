@@ -18,10 +18,13 @@ def get_state_id_by_name(mysql_user, mysql_pass, db_name, state_name):
     Returns:
         state.id if found, None otherwise.
     """
+    session = None
     try:
         # Create engine with connection to MySQL
         engine = create_engine(
-            f"mysql+mysqldb://{mysql_user}:{mysql_pass}@localhost:3306/{db_name}",
+            "mysql+mysqldb://{}:{}@localhost:3306/{}".format(
+                mysql_user, mysql_pass, db_name
+            ),
             pool_pre_ping=True
         )
 
@@ -31,20 +34,23 @@ def get_state_id_by_name(mysql_user, mysql_pass, db_name, state_name):
 
         # Query State object by exact name match
         state = session.query(State).filter(State.name == state_name).first()
-
         return state.id if state else None
 
     except Exception as e:
         print(e)
         return None
+
     finally:
-        session.close()
+        if session:
+            session.close()
 
 
 if __name__ == "__main__":
     if len(sys.argv) != 5:
-        print("Usage: {} <mysql_user> <mysql_password> <db_name> <state_name>"
-              .format(sys.argv[0]))
+        print(
+            "Usage: {} <mysql_user> <mysql_password> <db_name> <state_name>"
+            .format(sys.argv[0])
+        )
         sys.exit(1)
 
     mysql_user = sys.argv[1]

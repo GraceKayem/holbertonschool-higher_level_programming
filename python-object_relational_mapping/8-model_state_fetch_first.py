@@ -13,7 +13,9 @@ def connect_and_query(user: str, passwd: str, db_name: str):
     """Connect to the database and print the first State object by id."""
     try:
         # Connect to the MySQL database using SQLAlchemy
-        engine = create_engine(f"mysql+mysqldb://{user}:{passwd}@localhost:3306/{db_name}")
+        engine = create_engine(
+            "mysql+mysqldb://{}:{}@localhost:3306/{}".format(user, passwd, db_name)
+        )
 
         # Create a configured "Session" class
         Session = sessionmaker(bind=engine)

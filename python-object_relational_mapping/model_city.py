@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """
-Module containing the City class.
+Contains the City class definition
 
 City class:
-- Inherits from Base (from SQLAlchemy ORM)
-- Links to the 'cities' table
+- Inherits from Base (imported from model_state)
+- Links to MySQL table 'cities'
 - Attributes:
-    - id: primary key, integer, auto-increment, not null
-    - name: string(128), not null
+    - id: integer, primary key, auto-generated, not null
+    - name: string of 128 characters, not null
     - state_id: integer, not null, foreign key to states.id
 """
 
@@ -16,13 +16,14 @@ from model_state import Base
 
 
 class City(Base):
-    """Representation of a City linked to states."""
+    """Representation of a City linked to a State"""
     __tablename__ = 'cities'
 
-    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
     name = Column(String(128), nullable=False)
     state_id = Column(Integer, ForeignKey('states.id'), nullable=False)
 
     def __repr__(self):
-        return "<City(id={}, name={}, state_id={})>".format(self.id, self.name,
-                                                           self.state_id)
+        return "<City(id={}, name={}, state_id={})>".format(
+            self.id, self.name, self.state_id
+        )

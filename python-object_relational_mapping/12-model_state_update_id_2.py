@@ -31,8 +31,8 @@ def update_state_name(mysql_user, mysql_pass, db_name):
     session = Session()
 
     try:
-        # Retrieve the State object with id=2
-        state = session.query(State).get(2)
+        # Retrieve the State object with id=2 using filter_by (recommended)
+        state = session.query(State).filter_by(id=2).first()
 
         if state:
             # Update the name

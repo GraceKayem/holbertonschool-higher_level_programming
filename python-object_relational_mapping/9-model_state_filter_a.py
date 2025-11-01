@@ -17,12 +17,14 @@ def connect_and_query(user: str, passwd: str, db_name: str):
     """
     try:
         # Connect to the MySQL database using SQLAlchemy
-        engine = create_engine(f'mysql+mysqldb://{user}:{passwd}@localhost:3306/{db_name}')
+        engine = create_engine(
+            "mysql+mysqldb://{}:{}@localhost:3306/{}".format(
+                user, passwd, db_name
+            )
+        )
 
         # Create a configured "Session" class
         Session = sessionmaker(bind=engine)
-
-        # Create a session instance to perform queries
         session = Session()
 
         # Query State objects where name contains 'a', ordered by id
