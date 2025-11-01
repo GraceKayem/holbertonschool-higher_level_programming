@@ -17,7 +17,7 @@ def connect_and_query(user: str, passwd: str, db_name: str):
     """
     try:
         # Connect to the MySQL database using SQLAlchemy
-        engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'
+        engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'
                                .format(user, passwd, db_name))
 
         # Create a configured "Session" class
