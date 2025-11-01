@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 Script that lists all State objects containing the letter 'a'
-from the database hbtn_0e_6_usa
+from the database hbtn_0e_6_usa.
 """
 
 import sys
@@ -17,8 +17,7 @@ def connect_and_query(user: str, passwd: str, db_name: str):
     """
     try:
         # Connect to the MySQL database using SQLAlchemy
-        engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'
-                               .format(user, passwd, db_name))
+        engine = create_engine(f'mysql+mysqldb://{user}:{passwd}@localhost:3306/{db_name}')
 
         # Create a configured "Session" class
         Session = sessionmaker(bind=engine)
@@ -27,23 +26,27 @@ def connect_and_query(user: str, passwd: str, db_name: str):
         session = Session()
 
         # Query State objects where name contains 'a', ordered by id
-        states_containing_a = session.query(State)\
-                                     .filter(State.name.like('%a%'))\
-                                     .order_by(State.id)\
-                                     .all()
-        # .all() fetches all matching State objects as a list
+        states_containing_a = (
+            session.query(State)
+            .filter(State.name.like('%a%'))
+            .order_by(State.id)
+            .all()
+        )
 
         # Iterate over the retrieved states and print each
         for state in states_containing_a:
-            print(state)
-            # Each state prints as "id: name" due to __repr__ in model_state
+            print(state)  # __repr__ in model_state prints as "id: name"
+
+        # Close the session
+        session.close()
 
     except Exception as e:
-        # Catch any errors during connection, session creation, or querying
-        return e
+        print(e)
 
 
-# Only executes the function when running the script directly
-# Takes command-line arguments for MySQL credentials and database name
 if __name__ == "__main__":
+    if len(sys.argv) != 4:
+        print("Usage: ./script.py <username> <password> <database>")
+        sys.exit(1)
+
     connect_and_query(sys.argv[1], sys.argv[2], sys.argv[3])

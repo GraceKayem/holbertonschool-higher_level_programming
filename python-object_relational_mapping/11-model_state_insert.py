@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 """
+Script that adds the State object "Louisiana" to the database hbtn_0e_6_usa.
+
 - Uses SQLAlchemy ORM.
 - Imports Base and State from model_state.
 - Connects to a MySQL server running on localhost at port 3306.
@@ -11,44 +13,45 @@ import sys
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from model_state import Base, State
-import sys
 
 
-def connect_and_query(user: str, passwd: str, db_name: str):
+def add_state(mysql_user, mysql_pass, db_name):
     """
-    Connect to the database and list all State objects containing 'a',
-    sorted by ascending id.
+    Connect to the database, add a new State named "Louisiana",
+    and print its id.
     """
-    if __name__ == "__main__":
-    # Check that exactly 3 arguments are provided (user, password, db_name)
+    # Create engine
+    engine = create_engine(
+        f"mysql+mysqldb://{mysql_user}:{mysql_pass}@localhost:3306/{db_name}",
+        pool_pre_ping=True
+    )
+
+    # Create a configured "Session" class
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    try:
+        # Create a new State object
+        new_state = State(name="Louisiana")
+
+        # Add to session and commit
+        session.add(new_state)
+        session.commit()
+
+        # Print the id of the new state
+        print(new_state.id)
+    finally:
+        # Close the session
+        session.close()
+
+
+if __name__ == "__main__":
     if len(sys.argv) != 4:
         print("Usage: {} <mysql_user> <mysql_password> <db_name>".format(sys.argv[0]))
         sys.exit(1)
 
-    # Retrieve CLI arguments
-    mysql_user = sys.argv[1]
-    mysql_pass = sys.argv[2]
+    user = sys.argv[1]
+    password = sys.argv[2]
     db_name = sys.argv[3]
 
-    # Create a SQLAlchemy engine to connect to the MySQL database
-    engine = create_engine(
-        "mysql+mysqldb://{}:{}@localhost:3306/{}".format(mysql_user, mysql_pass, db_name),
-        pool_pre_ping=True
-    )
-
-    # Bind the engine to a session
-    Session = sessionmaker(bind=engine)
-    session = Session()
-
-    # Create a new State object for "Louisiana"
-    new_state = State(name="Louisiana")
-
-    # Add the object to the session and commit to save to the database
-    session.add(new_state)
-    session.commit()
-
-    # Print the new state's id after creation
-    print(new_state.id)
-
-    # Close the session
-    session.close()
+    add_state(user, password, db_name)

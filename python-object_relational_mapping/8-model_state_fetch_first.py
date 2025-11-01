@@ -1,38 +1,42 @@
 #!/usr/bin/python3
-"""script that prints the first State object from the database hbtn_0e_6_usa"""
+"""
+Script that prints the first State object from the database hbtn_0e_6_usa.
+"""
 
+import sys
+from model_state import Base, State
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
-from model_state import Base, State #State is your ORM class representing the states table.
-from sqlalchemy import create_engine #connects to MySQL
-from sqlalchemy.orm import sessionmaker #creates a session to interact with the database
-import sys #to read command-line arguments
 
 def connect_and_query(user: str, passwd: str, db_name: str):
+    """Connect to the database and print the first State object by id."""
+    try:
+        # Connect to the MySQL database using SQLAlchemy
+        engine = create_engine(f"mysql+mysqldb://{user}:{passwd}@localhost:3306/{db_name}")
 
-    try: 
-        #Connect to the database and make queries using ORM
-        engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'
-                          .format(user, passwd, db_name))
-        
-        #Create a configured "Session" class
+        # Create a configured "Session" class
         Session = sessionmaker(bind=engine)
-        state_session = Session() #state_session to perform queries
-        #Query the first State object ordered by id (ascending)
-        states = state_session.query(State).order_by(State.id).first()
-        #.order_by(State.id) ensures ascending order by id
-        #.first() → fetches the first result of State objects
+        session = Session()
 
-        #Print the result or "Nothing" if table is empty
-        if states is not None:
-            print(states)
+        # Query the first State object ordered by id ascending
+        state = session.query(State).order_by(State.id).first()
+
+        # Print the state or "Nothing" if table is empty
+        if state is not None:
+            print(state)
         else:
             print("Nothing")
-    #Catches any error during connection, session creation, or query execution
-    except Exception as e:
-        return(e)
 
-#Only executes the function when running the script directly
-#Takes command-line arguments for MySQL credentials and database name
+        # Close the session
+        session.close()
+
+    except Exception as e:
+        print(e)
+
+
 if __name__ == "__main__":
-    #Only runs when script executed directly
+    if len(sys.argv) != 4:
+        print("Usage: ./script.py <username> <password> <database>")
+        sys.exit(1)
     connect_and_query(sys.argv[1], sys.argv[2], sys.argv[3])

@@ -1,61 +1,47 @@
 #!/usr/bin/python3
 """
-Script that lists all State objects containing the letter 'a'
-from the database hbtn_0e_6_usa
+Script that prints the State object ID with the name passed as argument
+from the database hbtn_0e_6_usa.
 """
 
-from model_state import Base, State
+import sys
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-import sys
+from model_state import Base, State
 
 
-def connect_and_query(user: str, passwd: str, db_name: str, search: str):
+def get_state_id_by_name(mysql_user, mysql_pass, db_name, state_name):
     """
-    Connect to the MySQL database using SQLAlchemy ORM and return the
-    State object whose name exactly matches `state_name`.
+    Connects to the MySQL database using SQLAlchemy ORM and returns
+    the id of the State object whose name exactly matches `state_name`.
 
     Returns:
-        the id of the matched State as an integer (or whatever type is used),
-        or None if no matching State is found.
+        state.id if found, None otherwise.
     """
     try:
-        # Create the engine. The connection string targets localhost on the default MySQL port (3306). Using SQLAlchemy ORM methods prevents SQL injection by passing values as parameters to the query engine.
+        # Create engine with connection to MySQL
         engine = create_engine(
-            "mysql+mysqldb://{}:{}@localhost:3306/{}".format(
-                mysql_user, mysql_pass, db_name
-            ),
-            pool_pre_ping=True,
+            f"mysql+mysqldb://{mysql_user}:{mysql_pass}@localhost:3306/{db_name}",
+            pool_pre_ping=True
         )
 
-        # Create a configured "Session" class bound to this engine
+        # Create session
         Session = sessionmaker(bind=engine)
-
-        # Create a Session instance for DB operations
         session = Session()
 
-         # Use ORM filter to safely query for the State with exact name match.
-        # .first() returns the first matching State object or None.
+        # Query State object by exact name match
         state = session.query(State).filter(State.name == state_name).first()
 
-        if state:
-            return state.id
+        return state.id if state else None
+
+    except Exception as e:
+        print(e)
         return None
-
-            
-        finally:
-            # Always close the session to release DB resources
-            session.close()
-            
+    finally:
+        session.close()
 
 
-# Only executes the function when running the script directly
-# Takes command-line arguments for MySQL credentials and database name
 if __name__ == "__main__":
-    connect_and_query(sys.argv[1], sys.argv[2], sys.argv[3])
-
-    # Ensure the user provided exactly 4 arguments (username, password,
-    # database, state_name). Use a helpful usage output if not.
     if len(sys.argv) != 5:
         print("Usage: {} <mysql_user> <mysql_password> <db_name> <state_name>"
               .format(sys.argv[0]))
@@ -68,7 +54,6 @@ if __name__ == "__main__":
 
     state_id = get_state_id_by_name(mysql_user, mysql_pass, db_name, state_name)
 
-    # Print result according to the project's requirements
     if state_id is None:
         print("Not found")
     else:

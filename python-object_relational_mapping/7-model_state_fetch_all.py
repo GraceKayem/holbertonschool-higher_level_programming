@@ -1,36 +1,44 @@
 #!/usr/bin/python3
-"""script that lists all State objects from the database hbtn_0e_6_usa"""
+"""
+Script that lists all State objects from the database hbtn_0e_6_usa.
+"""
 
+import sys
+from model_state import Base, State
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
-from model_state import Base, State #State is your ORM class representing the states table.
-from sqlalchemy import create_engine #connects to MySQL
-from sqlalchemy.orm import sessionmaker #creates a session to interact with the database
-import sys #to read command-line arguments
 
 def connect_and_query(user: str, passwd: str, db_name: str):
+    """Connect to the database and list all State objects sorted by id."""
+    try:
+        # Create engine and connect to MySQL database
+        engine = create_engine(
+            f"mysql+mysqldb://{user}:{passwd}@localhost:3306/{db_name}"
+        )
 
-    try: 
-        #Connect to the database and make queries using ORM
-        engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'
-                          .format(user, passwd, db_name))
-        
+        # Create a configured "Session" class
         Session = sessionmaker(bind=engine)
-        state_session = Session() #state_session to perform queries
-        #start a query to get all State objects from the states table.
-        states = state_session.query(State).order_by(State.id).all()
-        #.order_by(State.id) ensures ascending order by id
-        #.all() → fetches all the results as a list of State objects
 
-        #retrieved states
+        # Create a session instance to perform queries
+        session = Session()
+
+        # Query all State objects, ordered by id
+        states = session.query(State).order_by(State.id).all()
+
+        # Print each state in the format: id: name
         for state in states:
-            #Prints in the required format: id: name
-            print("{}: {} ".format(state.id, state.name))
-    #Catches any error during connection, session creation, or query execution
-    except Exception as e:
-        return(e)
+            print(f"{state.id}: {state.name}")
 
-#Only executes the function when running the script directly
-#Takes command-line arguments for MySQL credentials and database name
+        # Close the session
+        session.close()
+
+    except Exception as e:
+        print(e)
+
+
 if __name__ == "__main__":
-    #Only runs when script executed directly
+    if len(sys.argv) != 4:
+        print("Usage: ./script.py <username> <password> <database>")
+        sys.exit(1)
     connect_and_query(sys.argv[1], sys.argv[2], sys.argv[3])
