@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 Script that lists all states with a name starting with 'N'
-from the database hbtn_0e_0_usa.
+from the database hbtn_0e_0_usa (case-sensitive).
 """
 
 import sys
@@ -15,7 +15,7 @@ def connect_and_query():
     password = sys.argv[2]
     db_name = sys.argv[3]
 
-    # Connect to a MySQL server running on localhost at port 3306
+    # Connect to MySQL
     db = MySQLdb.connect(
         host="localhost",
         port=3306,
@@ -24,22 +24,19 @@ def connect_and_query():
         db=db_name
     )
 
-    # Get a cursor
     cursor = db.cursor()
 
-    # Results must be sorted in ascending order by states.id
     try:
+        # Use BINARY to make the LIKE case-sensitive
         cursor.execute(
-            "SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id ASC"
+            "SELECT * FROM states WHERE BINARY name LIKE 'N%' ORDER BY id ASC"
         )
-        # Fetch and print rows
         rows = cursor.fetchall()
         for row in rows:
             print(row)
     except MySQLdb.Error as e:
         print(e)
 
-    # Close connections
     cursor.close()
     db.close()
 
