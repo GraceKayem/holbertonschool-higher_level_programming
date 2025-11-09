@@ -1,7 +1,7 @@
 #!/usr/bin/node
 
 /* Script that computes and prints a factorial */
-function factorial(n) {
+function factorial (n) {
   const num = parseInt(n);
   if (isNaN(num) || num <= 1) {
     return 1;
