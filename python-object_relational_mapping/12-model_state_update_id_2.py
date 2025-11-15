@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 """
-Script that changes the name of a State object in the database hbtn_0e_6_usa.
+Script that changes the name of a State object in the database
+hbtn_0e_6_usa.
 
-- Uses SQLAlchemy ORM.
-- Imports Base and State from model_state.
-- Connects to a MySQL server running on localhost at port 3306.
-- Changes the name of the State where id=2 to "New Mexico".
-- Does not execute when imported.
+- Uses SQLAlchemy ORM
+- Imports Base and State from model_state
+- Connects to a MySQL server running on localhost at port 3306
+- Changes the name of the State where id=2 to "New Mexico"
+- Does not execute when imported
 """
 
 import sys
@@ -15,43 +16,39 @@ from sqlalchemy.orm import sessionmaker
 from model_state import Base, State
 
 
-def update_state_name(mysql_user, mysql_pass, db_name):
-    """
-    Connects to the database, updates the State with id=2
-    to have the name "New Mexico".
-    """
-    # Create engine
-    engine = create_engine(
-        f"mysql+mysqldb://{mysql_user}:{mysql_pass}@localhost:3306/{db_name}",
-        pool_pre_ping=True
-    )
-
-    # Create session
-    Session = sessionmaker(bind=engine)
-    session = Session()
-
+def update_state_name(user: str, passwd: str, db_name: str) -> None:
+    """Update the State object with id=2 to have the name 'New Mexico'."""
+    session = None
     try:
-        # Retrieve the State object with id=2 using filter_by (recommended)
-        state = session.query(State).filter_by(id=2).first()
+        engine = create_engine(
+            "mysql+mysqldb://{}:{}@localhost:3306/{}".format(
+                user, passwd, db_name
+            ),
+            pool_pre_ping=True
+        )
+        Session = sessionmaker(bind=engine)
+        session = Session()
 
+        state = session.query(State).filter_by(id=2).first()
         if state:
-            # Update the name
             state.name = "New Mexico"
             session.commit()
+
+    except Exception as e:
+        print(e)
+
     finally:
-        # Close the session
-        session.close()
+        if session:
+            session.close()
 
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
         print(
-            "Usage: {} <mysql_user> <mysql_password> <db_name>".format(sys.argv[0])
+            "Usage: {} <mysql_user> <mysql_password> <db_name>".format(
+                sys.argv[0]
+            )
         )
         sys.exit(1)
 
-    user = sys.argv[1]
-    password = sys.argv[2]
-    db_name = sys.argv[3]
-
-    update_state_name(user, password, db_name)
+    update_state_name(sys.argv[1], sys.argv[2], sys.argv[3])
