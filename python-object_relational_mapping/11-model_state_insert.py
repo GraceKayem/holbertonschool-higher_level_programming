@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-Module to perform simple queries on the model_state model
-using an ORM - SQLAlchemy
+Module to add the State object "Louisiana" to the database hbtn_0e_6_usa
+using SQLAlchemy ORM.
 """
 from model_state import Base, State
 from sqlalchemy import create_engine
@@ -11,7 +11,8 @@ import sys
 
 def connect_and_query(user: str, passwd: str, dbase: str) -> None:
     """
-    Connect to the database and add a State named "Louisiana"
+    Connect to the database, add a new State named "Louisiana",
+    and print its id.
     """
     session = None
     try:
@@ -22,12 +23,12 @@ def connect_and_query(user: str, passwd: str, dbase: str) -> None:
         Session = sessionmaker(bind=engine)
         session = Session()
 
-        # Create and add Louisiana
+        # Add Louisiana
         louisiana = State(name="Louisiana")
         session.add(louisiana)
         session.commit()
 
-        # Print the id of the new state
+        # Print the id of the new State
         print(louisiana.id)
     except Exception as e:
         print(e)
