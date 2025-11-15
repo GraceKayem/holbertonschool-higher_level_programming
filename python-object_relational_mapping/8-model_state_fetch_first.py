@@ -40,7 +40,4 @@ def connect_and_query(user: str, passwd: str, db_name: str):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        print("Usage: ./script.py <username> <password> <database>")
-        sys.exit(1)
     connect_and_query(sys.argv[1], sys.argv[2], sys.argv[3])
