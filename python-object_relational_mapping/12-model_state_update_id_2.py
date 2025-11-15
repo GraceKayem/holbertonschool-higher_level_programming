@@ -1,12 +1,7 @@
 #!/usr/bin/python3
 """
-Script that changes the name of a State object in the database hbtn_0e_6_usa.
-
-- Uses SQLAlchemy ORM
-- Imports Base and State from model_state
-- Connects to a MySQL server running on localhost at port 3306
-- Changes the name of the State where id=2 to "New Mexico"
-- Does not execute when imported
+Script that changes the name of a State object with id=2
+in the database hbtn_0e_6_usa using SQLAlchemy ORM.
 """
 
 import sys
@@ -15,20 +10,19 @@ from sqlalchemy.orm import sessionmaker
 from model_state import Base, State
 
 
-def update_state_name(user: str, passwd: str, db_name: str) -> None:
-    """Update the State object with id=2 to have the name 'New Mexico'."""
+def update_state_name(user: str, passwd: str, dbase: str) -> None:
+    """Connect to the database and update State.id=2 to 'New Mexico'."""
     session = None
     try:
         engine = create_engine(
-            "mysql+mysqldb://{}:{}@localhost:3306/{}".format(
-                user, passwd, db_name
+            'mysql+mysqldb://{}:{}@localhost:3306/{}'.format(
+                user, passwd, dbase
             ),
             pool_pre_ping=True
         )
         Session = sessionmaker(bind=engine)
         session = Session()
 
-        # Retrieve the State object with id=2
         state = session.query(State).filter_by(id=2).first()
         if state:
             state.name = "New Mexico"
@@ -36,7 +30,6 @@ def update_state_name(user: str, passwd: str, db_name: str) -> None:
 
     except Exception as e:
         print(e)
-
     finally:
         if session:
             session.close()
