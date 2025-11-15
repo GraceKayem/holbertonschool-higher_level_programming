@@ -1,45 +1,42 @@
 #!/usr/bin/python3
 """
-Script that prints the State object ID with the name passed as argument
-from the database hbtn_0e_6_usa.
+Module to perform simple queries on the model_state model
+using an ORM - SQLAlchemy
 """
-
-import sys
+from model_state import Base, State
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from model_state import Base, State
+import sys
 
 
-def get_state_id_by_name(mysql_user, mysql_pass, db_name, state_name):
+def connect_and_query(user: str, passwd: str, dbase: str, search: str) -> None:
     """
-    Connects to the MySQL database using SQLAlchemy ORM and returns
-    the id of the State object whose name exactly matches `state_name`.
+    Connect to the database and make queries using ORM
 
-    Returns:
-        state.id if found, None otherwise.
+    Args:
+        user (str): MySQL user
+        passwd (str): MySQL password for `user`
+        dbase (str): Database to use
+        search (str): State to search for
     """
     session = None
     try:
-        # Create engine with connection to MySQL
         engine = create_engine(
-            "mysql+mysqldb://{}:{}@localhost:3306/{}".format(
-                mysql_user, mysql_pass, db_name
-            ),
+            'mysql+mysqldb://{}:{}@localhost:3306/{}'.format(user, passwd, dbase),
             pool_pre_ping=True
         )
-
-        # Create session
         Session = sessionmaker(bind=engine)
         session = Session()
+        states = session.query(State).order_by(State.id).all()
 
-        # Query State object by exact name match
-        state = session.query(State).filter(State.name == state_name).first()
-        return state.id if state else None
-
+        for state in states:
+            if state.name == search:
+                print(state.id)
+                break
+        else:
+            print("Not found")
     except Exception as e:
         print(e)
-        return None
-
     finally:
         if session:
             session.close()
@@ -47,20 +44,7 @@ def get_state_id_by_name(mysql_user, mysql_pass, db_name, state_name):
 
 if __name__ == "__main__":
     if len(sys.argv) != 5:
-        print(
-            "Usage: {} <mysql_user> <mysql_password> <db_name> <state_name>"
-            .format(sys.argv[0])
-        )
+        print("Usage: {} <user> <passwd> <db_name> <state_name>".format(sys.argv[0]))
         sys.exit(1)
 
-    mysql_user = sys.argv[1]
-    mysql_pass = sys.argv[2]
-    db_name = sys.argv[3]
-    state_name = sys.argv[4]
-
-    state_id = get_state_id_by_name(mysql_user, mysql_pass, db_name, state_name)
-
-    if state_id is None:
-        print("Not found")
-    else:
-        print(state_id)
+    connect_and_query(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
