@@ -12,7 +12,6 @@ import MySQLdb
 
 def connect_and_query():
     """Connect to the database and display states matching the argument."""
-    # Get command-line arguments
     username = sys.argv[1]
     password = sys.argv[2]
     db_name = sys.argv[3]
@@ -28,9 +27,9 @@ def connect_and_query():
         )
         cursor = db.cursor()
 
-        # REQUIRED: use format()
-        query = "SELECT * FROM states WHERE BINARY name = '{}' ORDER BY id ASC"\
-            .format(state_name)
+        # REQUIRED: use format(), split to avoid E501
+        query = ("SELECT * FROM states WHERE BINARY name = '{}' "
+                 "ORDER BY id ASC").format(state_name)
 
         cursor.execute(query)
         rows = cursor.fetchall()
@@ -42,14 +41,12 @@ def connect_and_query():
         print(e)
 
     finally:
-        # Only close if they exist
         try:
             cursor.close()
             db.close()
-        except:
+        except Exception:
             pass
 
 
 if __name__ == "__main__":
     connect_and_query()
-
