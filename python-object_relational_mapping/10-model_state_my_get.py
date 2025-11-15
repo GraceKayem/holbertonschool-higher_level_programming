@@ -22,7 +22,9 @@ def connect_and_query(user: str, passwd: str, dbase: str, search: str) -> None:
     session = None
     try:
         engine = create_engine(
-            'mysql+mysqldb://{}:{}@localhost:3306/{}'.format(user, passwd, dbase),
+            'mysql+mysqldb://{}:{}@localhost:3306/{}'.format(
+                user, passwd, dbase
+            ),
             pool_pre_ping=True
         )
         Session = sessionmaker(bind=engine)
@@ -44,7 +46,11 @@ def connect_and_query(user: str, passwd: str, dbase: str, search: str) -> None:
 
 if __name__ == "__main__":
     if len(sys.argv) != 5:
-        print("Usage: {} <user> <passwd> <db_name> <state_name>".format(sys.argv[0]))
+        print(
+            "Usage: {} <user> <passwd> <db_name> <state_name>".format(
+                sys.argv[0]
+            )
+        )
         sys.exit(1)
 
     connect_and_query(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
