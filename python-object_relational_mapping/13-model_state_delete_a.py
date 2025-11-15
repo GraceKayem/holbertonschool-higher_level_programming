@@ -10,18 +10,19 @@ from the database hbtn_0e_6_usa.
 """
 
 import sys
+import sys
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from model_state import Base, State
 
 
-def delete_states_with_a(user: str, passwd: str, dbname: str) -> None:
+def delete_states_with_a(user: str, password: str, dbname: str) -> None:
     """Delete all State objects containing 'a' in their name."""
     session = None
     try:
         # Create engine and session
         engine = create_engine(
-            f"mysql+mysqldb://{user}:{passwd}@localhost:3306/{dbname}",
+            f"mysql+mysqldb://{user}:{password}@localhost:3306/{dbname}",
             pool_pre_ping=True
         )
         Session = sessionmaker(bind=engine)
@@ -35,7 +36,7 @@ def delete_states_with_a(user: str, passwd: str, dbname: str) -> None:
         session.commit()
 
     except Exception as e:
-        print(e)
+        print(f"Error: {e}", file=sys.stderr)
 
     finally:
         if session:
