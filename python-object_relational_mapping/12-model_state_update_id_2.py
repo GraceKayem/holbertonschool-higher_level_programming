@@ -10,13 +10,13 @@ from sqlalchemy.orm import sessionmaker
 from model_state import Base, State
 
 
-def update_state_name(user: str, passwd: str, dbase: str) -> None:
+def update_state_name(user: str, passwd: str, dbname: str) -> None:
     """Connect to the database and update State.id=2 to 'New Mexico'."""
     session = None
     try:
         engine = create_engine(
-            'mysql+mysqldb://{}:{}@localhost:3306/{}'.format(
-                user, passwd, dbase
+            "mysql+mysqldb://{}:{}@localhost:3306/{}".format(
+                user, passwd, dbname
             ),
             pool_pre_ping=True
         )
@@ -38,9 +38,7 @@ def update_state_name(user: str, passwd: str, dbase: str) -> None:
 if __name__ == "__main__":
     if len(sys.argv) != 4:
         print(
-            "Usage: {} <mysql_user> <mysql_password> <db_name>".format(
-                sys.argv[0]
-            )
+            "Usage: {} <mysql_user> <mysql_password> <db_name>".format(sys.argv[0])
         )
         sys.exit(1)
 
