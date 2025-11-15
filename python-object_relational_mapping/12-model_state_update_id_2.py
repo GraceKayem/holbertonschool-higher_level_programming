@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """
-Script that changes the name of a State object in the database
-hbtn_0e_6_usa.
+Script that changes the name of a State object in the database hbtn_0e_6_usa.
 
 - Uses SQLAlchemy ORM
 - Imports Base and State from model_state
@@ -29,6 +28,7 @@ def update_state_name(user: str, passwd: str, db_name: str) -> None:
         Session = sessionmaker(bind=engine)
         session = Session()
 
+        # Retrieve the State object with id=2
         state = session.query(State).filter_by(id=2).first()
         if state:
             state.name = "New Mexico"
