@@ -21,7 +21,9 @@ def add_louisiana(user: str, passwd: str, db_name: str) -> None:
     try:
         # Connect to MySQL database
         engine = create_engine(
-            "mysql+mysqldb://{}:{}@localhost:3306/{}".format(user, passwd, db_name),
+            "mysql+mysqldb://{}:{}@localhost:3306/{}".format(
+                user, passwd, db_name
+            ),
             pool_pre_ping=True
         )
         Session = sessionmaker(bind=engine)
@@ -45,7 +47,10 @@ def add_louisiana(user: str, passwd: str, db_name: str) -> None:
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
-        print("Usage: {} <mysql_user> <mysql_password> <db_name>".format(sys.argv[0]))
+        print(
+            "Usage: {} <mysql_user> <mysql_password> "
+            "<db_name>".format(sys.argv[0])
+        )
         sys.exit(1)
 
     add_louisiana(sys.argv[1], sys.argv[2], sys.argv[3])
