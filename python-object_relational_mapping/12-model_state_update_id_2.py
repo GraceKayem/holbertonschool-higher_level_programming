@@ -14,15 +14,15 @@ def update_state_name(user: str, passwd: str, dbname: str) -> None:
     """Connect to the database and update State.id=2 to 'New Mexico'."""
     session = None
     try:
+        # Connect to the database
         engine = create_engine(
-            "mysql+mysqldb://{}:{}@localhost:3306/{}".format(
-                user, passwd, dbname
-            ),
+            "mysql+mysqldb://{}:{}@localhost:3306/{}".format(user, passwd, dbname),
             pool_pre_ping=True
         )
         Session = sessionmaker(bind=engine)
         session = Session()
 
+        # Query the state with id=2
         state = session.query(State).filter_by(id=2).first()
         if state:
             state.name = "New Mexico"
