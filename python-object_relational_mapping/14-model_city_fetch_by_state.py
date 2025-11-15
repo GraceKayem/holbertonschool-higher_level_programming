@@ -16,9 +16,10 @@ from model_city import City
 
 
 def fetch_cities(mysql_user, mysql_pass, db_name):
-    """Fetch all cities joined with states, sorted by city id ascending"""
+    """Fetch all cities joined with states, sorted by city id ascending."""
     engine = create_engine(
-        f"mysql+mysqldb://{mysql_user}:{mysql_pass}@localhost:3306/{db_name}",
+        f"mysql+mysqldb://{mysql_user}:{mysql_pass}"
+        f"@localhost:3306/{db_name}",
         pool_pre_ping=True
     )
 
@@ -36,8 +37,11 @@ def fetch_cities(mysql_user, mysql_pass, db_name):
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
-        print("Usage: {} <mysql_user> <mysql_password> <db_name>"
-              .format(sys.argv[0]))
+        print(
+            "Usage: {} <mysql_user> <mysql_password> <db_name>".format(
+                sys.argv[0]
+            )
+        )
         sys.exit(1)
 
     fetch_cities(sys.argv[1], sys.argv[2], sys.argv[3])
