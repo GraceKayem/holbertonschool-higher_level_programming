@@ -18,39 +18,38 @@ def connect_and_query():
     db_name = sys.argv[3]
     state_name = sys.argv[4]
 
-    # Connect to the MySQL database
-    db = MySQLdb.connect(
-        host="localhost",
-        port=3306,
-        user=username,
-        passwd=password,
-        db=db_name
-    )
-
-    # Create a cursor
-    cursor = db.cursor()
-
     try:
-        # Execute query safely to avoid SQL injection
-        cursor.execute(
-            "SELECT * FROM states WHERE name = %s ORDER BY id ASC",
-            (state_name,)
+        db = MySQLdb.connect(
+            host="localhost",
+            port=3306,
+            user=username,
+            passwd=password,
+            db=db_name
         )
-        # Fetch all matching rows
+        cursor = db.cursor()
+
+        # REQUIRED: use format()
+        query = "SELECT * FROM states WHERE BINARY name = '{}' ORDER BY id ASC"\
+            .format(state_name)
+
+        cursor.execute(query)
         rows = cursor.fetchall()
+
         for row in rows:
             print(row)
+
     except MySQLdb.Error as e:
         print(e)
+
     finally:
-        # Close cursor and connection
-        cursor.close()
-        db.close()
+        # Only close if they exist
+        try:
+            cursor.close()
+            db.close()
+        except:
+            pass
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 5:
-        print("Usage: {} <username> <password> <database> <state_name>"
-              .format(sys.argv[0]))
-        sys.exit(1)
     connect_and_query()
+
