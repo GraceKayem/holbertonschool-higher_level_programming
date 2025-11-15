@@ -28,7 +28,12 @@ def fetch_cities(mysql_user, mysql_pass, db_name):
 
     try:
         # Join cities to states and order by city.id
-        results = session.query(City, State).join(State).order_by(City.id).all()
+        results = (
+            session.query(City, State)
+            .join(State)
+            .order_by(City.id)
+            .all()
+        )
         for city, state in results:
             print(f"{state.name}: ({city.id}) {city.name}")
     finally:
