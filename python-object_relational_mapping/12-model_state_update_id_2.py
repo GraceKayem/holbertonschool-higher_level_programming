@@ -1,32 +1,54 @@
 #!/usr/bin/python3
+"""
+Script that changes the name of a State object in the database
+hbtn_0e_6_usa.
 
+- Uses SQLAlchemy ORM
+- Imports Base and State from model_state
+- Connects to a MySQL server running on localhost at port 3306
+- Changes the name of the State where id=2 to "New Mexico"
+- Does not execute when imported
 """
-Module to perfom simple queries on the model_state model
-using and ORM - SQLAlchemy
-"""
-from model_state import Base, State
+
+import sys
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-import sys
+from model_state import Base, State
 
 
-def connect_and_query(user: str, passwd: str, dbase: str) -> None:
-
-    """
-    Connect to the database and make queries using ORM
-    """
+def update_state_name(user: str, passwd: str, db_name: str) -> None:
+    """Update the State object with id=2 to have the name 'New Mexico'."""
+    session = None
     try:
-        engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'
-                               .format(user, passwd, dbase))
+        engine = create_engine(
+            "mysql+mysqldb://{}:{}@localhost:3306/{}".format(
+                user, passwd, db_name
+            ),
+            pool_pre_ping=True
+        )
         Session = sessionmaker(bind=engine)
-        state_session = Session()
-        state = state_session.query(State).filter_by(id=2).first()
-        state.name = "New Mexico"
-        state_session.commit()
+        session = Session()
+
+        state = session.query(State).filter_by(id=2).first()
+        if state:
+            state.name = "New Mexico"
+            session.commit()
 
     except Exception as e:
-        return e
+        print(e)
+
+    finally:
+        if session:
+            session.close()
 
 
 if __name__ == "__main__":
-    connect_and_query(sys.argv[1], sys.argv[2], sys.argv[3])
+    if len(sys.argv) != 4:
+        print(
+            "Usage: {} <mysql_user> <mysql_password> <db_name>".format(
+                sys.argv[0]
+            )
+        )
+        sys.exit(1)
+
+    update_state_name(sys.argv[1], sys.argv[2], sys.argv[3])
