@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 from flask import Flask, render_template
+import json
+
 
 app = Flask(__name__)
 
@@ -18,7 +20,7 @@ def contact():
 @app.route('/items')
 def items():
     try:
-        with open('items.josn', 'r') as f:
+        with open('items.json', 'r') as f:
             data = json.load(f)
             items = data.get('items', [])
     except Exception:
