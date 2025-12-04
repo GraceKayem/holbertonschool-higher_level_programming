@@ -8,7 +8,11 @@ app = Flask(__name__)
 def json_file():
     try:
         with open("products.json", "r") as f:
-            return json.load(f).get("products", [])
+            data = json.load(f)
+
+            if isinstance(data, dict):
+              return data.get("products", [])
+            return data
     except Exception:
         return None
 
