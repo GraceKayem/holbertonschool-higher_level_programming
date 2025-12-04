@@ -1,7 +1,10 @@
-# create_db.py
 import sqlite3
+import os
 
 def create_database():
+    if os.path.exists('products.db'):
+        os.remove('products.db')
+
     conn = sqlite3.connect('products.db')
     cursor = conn.cursor()
     cursor.execute('''
@@ -12,7 +15,6 @@ def create_database():
             price REAL NOT NULL
         )
     ''')
-    cursor.execute('DELETE FROM Products')  # Optional: reset table
     cursor.execute('''
         INSERT INTO Products (id, name, category, price)
         VALUES
