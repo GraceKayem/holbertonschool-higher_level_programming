@@ -3,6 +3,16 @@
 ![Image](https://i.postimg.cc/Kvdc0GCw/358289.jpg)
 
 
+<div style="position: relative; display: inline-block; width: 800px;">
+  <img src="https://i.postimg.cc/Kvdc0GCw/358289.jpg" alt="Image" style="width: 600%;">
+  <div style="position: absolute; top: 10px; left: 10px; color: white; 
+              background-color: rgba(0,0,0,0.5); padding: 10px; font-size: 18px;">
+    Python 3: Mutable, Immutable… Everything Is an Object!
+  </div>
+</div>
+
+
+
 ## Introduction
 This blog explores how Python stores objects in memory, how the language distinguishes identity from type, and why some objects can change while others cannot. These concepts reveal why certain operations behave unexpectedly, why function arguments sometimes update, and how Python manages memory behind the scenes. I will be breaking down everything I have learned in this project, with clear examples showing how identity, mutability, and function semantics work in real Python environments.
 
