@@ -5,14 +5,10 @@
 ## Introduction
 This blog explores how Python stores objects in memory, how the language distinguishes identity from type, and why some objects can change while others cannot. These concepts reveal why certain operations behave unexpectedly, why function arguments sometimes update, and how Python manages memory behind the scenes. I will be breaking down everything I have learned in this project, with clear examples showing how identity, mutability, and function semantics work in real Python environments.
 
----
-
 # id and type
 
 Python offers several methods for identifying an object’s type, with the most basic ones being the built-in **type()** and **id()** functions.  
 `type()` provides a quick way to check an object’s type, while `id()` returns the unique identifier of an object—an integer representing the memory address.
-
----
 
 # TYPE()
 
