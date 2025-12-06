@@ -49,14 +49,14 @@ print(type({1, 2, 3})) # Output: <class 'set'>
 print(type({"a": 1, "b": 3})) # Output: <class 'dict'>
 print(type((1, 2, 3))) # Output: <class 'tuple>
 ```
-## ID()
+### ID()
 
-### How `id(obj)` Function Work? 
+#### How `id(obj)` Function Work? 
 - Returns the unique idenyifier of an object.
 - **object:** The object whose unique identifier you want to retrieve.
 - **returns:**  An interger representing the identity of the given object.
 
-### Why Use `id(obj)`
+#### Why Use `id(obj)`
 - Helps understand how Python handles objects in memory
 - See if two variables refer to the same object
 - Useful for debugging
@@ -79,7 +79,7 @@ c = [1, 2, 3] # this represents a new object with the same value so it also not 
 a == b # Output: True
 a == c # Output: False
 ``` 
-## Mutable Objects
+### Mutable Objects
 Mutable objects are types like Python lists, Python dicts, Python sets, or Python bytearray. Custom classes are generally mutable, meaning they can be changed after being created.
 
 #### Example 1: observing changes in mutable objects
@@ -91,7 +91,7 @@ a.append(4) # modify the object
 print(id(a)) # Output: same id
 ```
 
-## Immutable Objects
+### Immutable Objects
 Immutable objects operate the opposite way from mutable ones — they cannot be changed once created. Any modification creates a new object.
 Common immutable types include integers, strings, floats, complex, tuples and bytes.
 
@@ -111,10 +111,10 @@ second_string = first_string + "Thomas" # This creates a new string since we can
 print(second_string)
 ```
 
-## The difference between assignment and referencing
+### The difference between assignment and referencing
 In Python, assignments is the process of binding a new to an objects, whereas, variables are references to objects. when a value is assigned to a variable, it creates a reference to the object that represnts the value. 
 
-### How assignments work:
+#### How assignments work:
 Assignmenst use the following syntax: variable = expression. The expression on the right-hand sideis evaluated, and its value is then assigned to the variable on the left-hand. 
 
 #### Example code: Assigning the value 30 to the variable 'a'
@@ -123,7 +123,7 @@ a = 30
 print(a)
 ```
 
-### How referencing work:
+#### How referencing work:
 Variables are references to objects. When a value is assigned to a variable, it creates a reference to the object that represents the value.
 
 #### Example code: Illustrating Python references
@@ -154,8 +154,8 @@ x = x + 1
 print(id(x))  # different id → new object created
 ```
 
-## Memory schema
-### Diagram 1 (Aliasing): it portrays both a and b variables refer to the same object:
+### Memory schema
+#### Diagram 1 (Aliasing): it portrays both a and b variables refer to the same object:
 ``` 
 a = [1, 2, 3]
 b =a 
@@ -172,7 +172,7 @@ a is b # Output: True
    b 
 ``` 
 
-### Diagram 2: a and b have the same value but do not refer to the same object.
+#### Diagram 2: a and b have the same value but do not refer to the same object.
 ``` 
 a = [1, 2, 3]
 b = [1, 2, 3]
@@ -217,7 +217,7 @@ func(x)
 print(x)   # unchanged
 ```
 
-## Integer pre-allocation? (262 first integers created when CPython starts)
+### Integer pre-allocation? (262 first integers created when CPython starts)
 CPython pre-allocates small integers to improve performance.
 **These are:**
 - from -5 to 256 (inclusive)
@@ -232,7 +232,7 @@ b = 10
 a is b   # True
 ```
 
-## The mechanism of aliases
+### The mechanism of aliases
 Aliasing occurs when two or more variables reference the same object. In general, it is safer to avoid aliasing when you are working with mutable objects. Of course, for immutable objects, there’s no problem. That’s why Python is free to alias strings when it sees an opportunity to economize.
 
 #### Example code:
@@ -243,7 +243,7 @@ a is b
 True
 ```
 
-## NSMALLPOSINTS, NSMALLNEGINTS
+### NSMALLPOSINTS, NSMALLNEGINTS
 These constants define how many small integers Python pre-allocates.
 - NSMALLPOSINTS = 257 (for 0 through 256)
 - NSMALLNEGINTS = 5 (for -1 through -5)
@@ -253,12 +253,12 @@ These constants define how many small integers Python pre-allocates.
 - reduce memory fragmentation
 - avoid re-creating common integer objects
 
-### Why NSMALLPOSINTS and NSMALLNEGINTS have those values?
+#### Why NSMALLPOSINTS and NSMALLNEGINTS have those values?
 - Small integers (especially between -5 and 256) are used extremely often
 - These values appear constantly in loops, indexing, slicing, boolean logic, counting, and interpreter operations
 - Pre-allocating them avoids creating thousands of identical integer objects
 
-## Tuple and Frozen Set
+### Tuple and Frozen Set
 Tuples and frozensets are immutable containers, but their elements can be mutable.
 
 #### Example code:
@@ -276,7 +276,7 @@ fs = frozenset([3, 4, 5])
 Elements cannot be changed unless they themselves are mutable.
 This is why "immutable container" is not the same as "contains only immutable elements".
 
-## Conculsions
+### Conculsions
 Understanding Python objects, referencing, mutability, assignment, and memory handling is essential for writing reliable code. By knowing how Python stores and manages objects behind the scenes, it becomes easier to predict behavior, avoid side effects, debug problems, and write more efficient programs.
 
 
